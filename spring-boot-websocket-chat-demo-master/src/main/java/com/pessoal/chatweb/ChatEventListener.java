@@ -34,7 +34,7 @@ public class ChatEventListener {
             ChatMensagem mensagem = new ChatMensagem();
             mensagem.setTipo(ChatMensagem.TipoMensagem.SAIR);
             mensagem.setUsuario(username);
-            messagingTemplate.convertAndSend("/topic/public", chatMensagem);
+            messagingTemplate.convertAndSend("/topic/public", mensagem);
         }
     }
 }
