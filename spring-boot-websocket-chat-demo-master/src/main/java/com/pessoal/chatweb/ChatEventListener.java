@@ -32,9 +32,8 @@ public class ChatEventListener {
             logger.info("Usuário desconectado: " + username);
 
             ChatMensagem mensagem = new ChatMensagem();
-            mensagem.setType(ChatMensagem.TipoMensagem.SAIR);
+            mensagem.setTipo(ChatMensagem.TipoMensagem.SAIR);
             mensagem.setUsuario(username);
-
             messagingTemplate.convertAndSend("/topic/public", chatMensagem);
         }
     }
