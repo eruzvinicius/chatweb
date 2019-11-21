@@ -1,6 +1,5 @@
-package com.example.websocketdemo.controller;
+package com.pessoal.chatweb;
 
-import com.example.websocketdemo.model.ChatMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,9 +11,9 @@ import org.springframework.web.socket.messaging.SessionConnectedEvent;
 import org.springframework.web.socket.messaging.SessionDisconnectEvent;
 
 @Component
-public class WebSocketEventListener {
+public class ChatEventListener {
 
-    private static final Logger logger = LoggerFactory.getLogger(WebSocketEventListener.class);
+    private static final Logger logger = LoggerFactory.getLogger(ChatEventListener.class);
 
     @Autowired
     private SimpMessageSendingOperations messagingTemplate;
