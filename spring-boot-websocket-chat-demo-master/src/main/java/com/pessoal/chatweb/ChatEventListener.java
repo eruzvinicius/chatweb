@@ -31,8 +31,8 @@ public class ChatEventListener {
         if(username != null) {
             logger.info("Usuário desconectado: " + username);
 
-            ChatMensagem chatMessage = new ChatMensagem();
-            chatMessage.setType(ChatMensagem.MessageType.LEAVE);
+            ChatMessage chatMessage = new ChatMessage();
+            chatMessage.setType(ChatMessage.MessageType.LEAVE);
             chatMessage.setSender(username);
 
             messagingTemplate.convertAndSend("/topic/public", chatMessage);
