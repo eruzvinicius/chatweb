@@ -20,7 +20,7 @@ public class ChatEventListener {
 
     @EventListener
     public void handleWebSocketConnectListener(SessionConnectedEvent event) {
-        logger.info("Nova conexão web socket foi recebida");
+        logger.info("Nova conexão web socket estabelecida.");
     }
 
     @EventListener
@@ -31,10 +31,10 @@ public class ChatEventListener {
         if(username != null) {
             logger.info("Usuário desconectado: " + username);
 
-            ChatMessage chatMessage = new ChatMessage();
-            chatMessage.setType(ChatMessage.MessageType.LEAVE);
-            chatMessage.setSender(username);
-            messagingTemplate.convertAndSend("/topic/public", chatMessage);
+            ChatMensagem mensagem = new ChatMensagem();
+            mensagem.setTipo(ChatMensagem.TipoMensagem.SAIR);
+            mensagem.setUsuario(username);
+            messagingTemplate.convertAndSend("/topic/public", mensagem);
         }
     }
 }

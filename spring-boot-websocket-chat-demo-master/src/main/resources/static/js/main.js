@@ -16,7 +16,7 @@ var colors = [
     '#ffc107', '#ff85af', '#FF9800', '#39bbb0'
 ];
 
-function connect(event) {
+function conectar(event) {
     username = document.querySelector('#name').value.trim();
 
     if(username) {
@@ -37,9 +37,9 @@ function onConnected() {
     stompClient.subscribe('/topic/public', onMessageReceived);
 
     // Tell your username to the server
-    stompClient.send("/app/chat.addUser",
+    stompClient.send("/app/chat.addUsuario",
         {},
-        JSON.stringify({sender: username, type: 'JOIN'})
+        JSON.stringify({usuario: username, tipo: 'ENTRAR'})
     )
 
     connectingElement.classList.add('hidden');
@@ -52,17 +52,17 @@ function onError(error) {
 }
 
 
-function sendMessage(event) {
+function enviarMensagem(event) {
     var messageContent = messageInput.value.trim();
 
     if(messageContent && stompClient) {
-        var chatMessage = {
-            sender: username,
-            content: messageInput.value,
-            type: 'CHAT'
+        var mensagem = {
+            usuario: username,
+            conteudo: messageInput.value,
+            tipo: 'CHAT'
         };
 
-        stompClient.send("/app/chat.sendMessage", {}, JSON.stringify(chatMessage));
+        stompClient.send("/app/chat.enviarMensagem", {}, JSON.stringify(mensagem));
         messageInput.value = '';
     }
     event.preventDefault();
@@ -74,30 +74,30 @@ function onMessageReceived(payload) {
 
     var messageElement = document.createElement('li');
 
-    if(message.type === 'JOIN') {
+    if(message.tipo === 'ENTRAR') {
         messageElement.classList.add('event-message');
-        message.content = message.sender + ' entrou!';
-    } else if (message.type === 'LEAVE') {
+        message.conteudo = message.usuario + ' entrou!';
+    } else if (message.tipo === 'SAIR') {
         messageElement.classList.add('event-message');
-        message.content = message.sender + ' saiu!';
+        message.conteudo = message.usuario + ' saiu!';
     } else {
         messageElement.classList.add('chat-message');
 
         var avatarElement = document.createElement('i');
-        var avatarText = document.createTextNode(message.sender[0]);
+        var avatarText = document.createTextNode(message.usuario[0]);
         avatarElement.appendChild(avatarText);
-        avatarElement.style['background-color'] = getAvatarColor(message.sender);
+        avatarElement.style['background-color'] = getAvatarColor(message.usuario);
 
         messageElement.appendChild(avatarElement);
 
         var usernameElement = document.createElement('span');
-        var usernameText = document.createTextNode(message.sender);
+        var usernameText = document.createTextNode(message.usuario);
         usernameElement.appendChild(usernameText);
         messageElement.appendChild(usernameElement);
     }
 
     var textElement = document.createElement('p');
-    var messageText = document.createTextNode(message.content);
+    var messageText = document.createTextNode(message.conteudo);
     textElement.appendChild(messageText);
 
     messageElement.appendChild(textElement);
@@ -117,5 +117,5 @@ function getAvatarColor(messageSender) {
     return colors[index];
 }
 
-usernameForm.addEventListener('submit', connect, true)
-messageForm.addEventListener('submit', sendMessage, true)
+usernameForm.addEventListener('submit', conectar, true)
+messageForm.addEventListener('submit', enviarMensagem, true)
